@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -15,15 +14,15 @@ struct Estudiante {
 };
 
 const int MAX_ESTUDIANTES = 30;
-Estudiante estudiantes[MAX_ESTUDIANTES];  
-int numEstudiantes = 1;
+Estudiante estudiantes[MAX_ESTUDIANTES];
+int numEstudiantes = 0;
 
-// FunciÃ³n para capturar datos de un estudiante
+// Función para capturar datos de un estudiante
 void capturarEstudiante() {
-    if (numEstudiantes <= MAX_ESTUDIANTES) {
-        cout << "Ingrese el cÃ³digo del estudiante: ";
+    if (numEstudiantes < MAX_ESTUDIANTES) {
+        cout << "Ingrese el código del estudiante: ";
         cin >> estudiantes[numEstudiantes].codigo;
-        cin.ignore(); // Limpiar el buffer del teclado
+        cin.ignore();
 
         cout << "Ingrese el nombre del estudiante: ";
         getline(cin, estudiantes[numEstudiantes].nombre);
@@ -31,10 +30,10 @@ void capturarEstudiante() {
         cout << "Ingrese la ciudad del estudiante: ";
         getline(cin, estudiantes[numEstudiantes].ciudad);
 
-        cout << "Ingrese la direcciÃ³n del estudiante: ";
+        cout << "Ingrese la dirección del estudiante: ";
         getline(cin, estudiantes[numEstudiantes].direccion);
 
-        cout << "Ingrese el telÃ©fono del estudiante: ";
+        cout << "Ingrese el teléfono del estudiante: ";
         getline(cin, estudiantes[numEstudiantes].telefono);
 
         cout << "Ingrese el correo del estudiante: ";
@@ -46,16 +45,16 @@ void capturarEstudiante() {
         numEstudiantes++;
         cout << "Estudiante agregado correctamente." << endl;
     } else {
-        cout << "No se pueden agregar mÃ¡s estudiantes. El lÃ­mite es " << MAX_ESTUDIANTES << "." << endl;
+        cout << "No se pueden agregar más estudiantes. El límite es " << MAX_ESTUDIANTES << "." << endl;
     }
 }
 
-// FunciÃ³n para modificar datos de un estudiante
+// Función para modificar datos de un estudiante
 void modificarEstudiante() {
-    int codigo;
-    cout << "Ingrese el cÃ³digo del estudiante que desea modificar: ";
+    long long int codigo;
+    cout << "Ingrese el código del estudiante que desea modificar: ";
     cin >> codigo;
-    cin.ignore(); // Limpiar el buffer del teclado
+    cin.ignore();
 
     for (int i = 0; i < numEstudiantes; ++i) {
         if (estudiantes[i].codigo == codigo) {
@@ -65,10 +64,10 @@ void modificarEstudiante() {
             cout << "Ingrese la nueva ciudad del estudiante: ";
             getline(cin, estudiantes[i].ciudad);
 
-            cout << "Ingrese la nueva direcciÃ³n del estudiante: ";
+            cout << "Ingrese la nueva dirección del estudiante: ";
             getline(cin, estudiantes[i].direccion);
 
-            cout << "Ingrese el nuevo telÃ©fono del estudiante: ";
+            cout << "Ingrese el nuevo teléfono del estudiante: ";
             getline(cin, estudiantes[i].telefono);
 
             cout << "Ingrese el nuevo correo del estudiante: ";
@@ -82,15 +81,15 @@ void modificarEstudiante() {
         }
     }
 
-    cout << "No se encontrÃ³ ningÃºn estudiante con el cÃ³digo ingresado." << endl;
+    cout << "No se encontró ningún estudiante con el código ingresado." << endl;
 }
 
-// FunciÃ³n para eliminar un estudiante
+// Función para eliminar un estudiante
 void eliminarEstudiante() {
-    int codigo;
-    cout << "Ingrese el cÃ³digo del estudiante que desea eliminar: ";
+    long long int codigo;
+    cout << "Ingrese el código del estudiante que desea eliminar: ";
     cin >> codigo;
-    cin.ignore(); // Limpiar el buffer del teclado
+    cin.ignore();
 
     for (int i = 0; i < numEstudiantes; ++i) {
         if (estudiantes[i].codigo == codigo) {
@@ -103,10 +102,10 @@ void eliminarEstudiante() {
         }
     }
 
-    cout << "No se encontrÃ³ ningÃºn estudiante con el cÃ³digo ingresado." << endl;
+    cout << "No se encontró ningún estudiante con el código ingresado." << endl;
 }
 
-// FunciÃ³n para listar todos los estudiantes
+// Función para listar todos los estudiantes
 void listarEstudiantes() {
     if (numEstudiantes == 0) {
         cout << "No hay estudiantes registrados." << endl;
@@ -115,33 +114,43 @@ void listarEstudiantes() {
 
     cout << "Lista de estudiantes:" << endl;
     for (int i = 0; i < numEstudiantes; ++i) {
-        cout << "CÃ³digo: " << estudiantes[i].codigo << endl;
+        cout << "Código: " << estudiantes[i].codigo << endl;
         cout << "Nombre: " << estudiantes[i].nombre << endl;
         cout << "Ciudad: " << estudiantes[i].ciudad << endl;
-        cout << "DirecciÃ³n: " << estudiantes[i].direccion << endl;
-        cout << "TelÃ©fono: " << estudiantes[i].telefono << endl;
+        cout << "Dirección: " << estudiantes[i].direccion << endl;
+        cout << "Teléfono: " << estudiantes[i].telefono << endl;
         cout << "Correo: " << estudiantes[i].correo << endl;
         cout << "Documento: " << estudiantes[i].documento << endl;
         cout << "------------------------" << endl;
     }
 }
 
-// FunciÃ³n para ordenar estudiantes por cÃ³digo
+// Función para ordenar estudiantes por código (método burbuja)
 void ordenarPorCodigo() {
-    sort(estudiantes, estudiantes + numEstudiantes, [](const Estudiante& a, const Estudiante& b) {
-        return a.codigo < b.codigo;
-    });
-    cout << "Estudiantes ordenados por cÃ³digo." << endl;
+    for (int i = 0; i < numEstudiantes - 1; ++i) {
+        for (int j = 0; j < numEstudiantes - i - 1; ++j) {
+            if (estudiantes[j].codigo > estudiantes[j + 1].codigo) {
+                Estudiante temp = estudiantes[j];
+                estudiantes[j] = estudiantes[j + 1];
+                estudiantes[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Estudiantes ordenados por código." << endl;
 }
 
-// FunciÃ³n para ordenar estudiantes por ciudad y nombre
+// Función para ordenar estudiantes por ciudad y nombre (método burbuja)
 void ordenarPorCiudadNombre() {
-    sort(estudiantes, estudiantes + numEstudiantes, [](const Estudiante& a, const Estudiante& b) {
-        if (a.ciudad == b.ciudad) {
-            return a.nombre < b.nombre;
+    for (int i = 0; i < numEstudiantes - 1; ++i) {
+        for (int j = 0; j < numEstudiantes - i - 1; ++j) {
+            if (estudiantes[j].ciudad > estudiantes[j + 1].ciudad ||
+                (estudiantes[j].ciudad == estudiantes[j + 1].ciudad && estudiantes[j].nombre > estudiantes[j + 1].nombre)) {
+                Estudiante temp = estudiantes[j];
+                estudiantes[j] = estudiantes[j + 1];
+                estudiantes[j + 1] = temp;
+            }
         }
-        return a.ciudad < b.ciudad;
-    });
+    }
     cout << "Estudiantes ordenados por ciudad y nombre." << endl;
 }
 
@@ -149,17 +158,17 @@ int main() {
     int opcion;
 
     do {
-        cout << "MenÃº:" << endl;
+        cout << "Menú:" << endl;
         cout << "1. Capturar estudiante" << endl;
         cout << "2. Modificar estudiante" << endl;
         cout << "3. Eliminar estudiante" << endl;
         cout << "4. Listar estudiantes" << endl;
-        cout << "5. Ordenar por cÃ³digo" << endl;
+        cout << "5. Ordenar por código" << endl;
         cout << "6. Ordenar por ciudad y nombre" << endl;
         cout << "0. Salir" << endl;
-        cout << "Ingrese una opciÃ³n: ";
+        cout << "Ingrese una opción: ";
         cin >> opcion;
-        cin.ignore(); // Limpiar el buffer del teclado
+        cin.ignore();
 
         switch (opcion) {
             case 1:
@@ -184,7 +193,7 @@ int main() {
                 cout << "Saliendo del programa..." << endl;
                 break;
             default:
-                cout << "OpciÃ³n invÃ¡lida. Intente de nuevo." << endl;
+                cout << "Opción inválida. Intente de nuevo." << endl;
         }
 
         cout << endl;
