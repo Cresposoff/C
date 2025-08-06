@@ -1,11 +1,35 @@
 #include <iostream>
+#include <conio.h>
+#include <string.h>
+
 using namespace std;
+
 int main() {
 
-	int * int_ptr=new int;
-	*int_ptr=10;
-	cout << "Valor antes de delete: " << *int_ptr << endl;
-	delete int_ptr; // Liberando memoria
-	cout << int_ptr << endl;
-	int_ptr = nullptr; // Buena práctica para evitar puntero colgante.
+	int numeros [] = {4,2,3,1,5};
+	int i, pos, aux;
+
+	for (i = 0; i < 5; i++) {
+		pos = i;
+		aux = numeros[i];
+
+		while ((pos > 0) && (numeros[pos - 1] > aux)) {
+			numeros[pos] = numeros[pos - 1];
+			pos--;
+
+		}
+
+		numeros[pos] = aux;
+
+	}
+
+	cout << "Orden Ascendente: ";
+	for (i = 0; i < 5; i++) cout << numeros[i] << " ";
+
+	cout << "\nOrden Descendente: ";
+	for (i = 4; i >= 0; i--) cout << numeros[i] << " ";
+
+	getch();
+	return 0;
+
 }
